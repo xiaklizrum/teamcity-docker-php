@@ -1,0 +1,25 @@
+version: '3'
+services:
+  teamcity-server:
+    image: jetbrains/teamcity-server
+    ports:
+     - ${EXTERNAL_TEAMCITY_SERVER_PORT}:8111
+    restart: always
+    volumes:
+      - ./data:/data/teamcity_server/datadir
+      - ./log:/opt/teamcity/logs
+      - ./../../projects/ru.hotlead.crm:/var/www
+  teamcity-agent:
+    image: xiaklizrum/teamcity-php-agent
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    restart: always
+    volumes:
+      - ./../../projects/ru.hotlead.crm:/var/www
+    environment:
+      - SERVER_URL=teamcity-server:8111
+      - AGENT_NAME=php-agent
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - COMPOSER_PROCESS_TIMEOUT=1200
