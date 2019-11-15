@@ -5,8 +5,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN chown root:root /tmp && chmod ugo+rwXt /tmp
 RUN add-apt-repository ppa:ondrej/php \
     && apt-get update \
-    && apt-get install -y curl php5.6-cli php5.6-dev php5.6-curl \
-    php5.6-mbstring php5.6-xml php5.6-zip php5.6-gd php5.6-mysql \
+    && apt-get install -y curl unzip php5.6-cli php5.6-dev php5.6-curl \
+    php5.6-mbstring php5.6-xml php5.6-zip php5.6-gd php5.6-mysql php5.6-xdebug \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -Rf /tmp/*
